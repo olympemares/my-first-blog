@@ -1,0 +1,55 @@
+
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<h1>Liste des Skieurs</h1>
+    <ul>
+        {% for character in characters %}
+            <li>
+                <strong>ID:</strong> {{ character.id_character }}<br>
+                <strong>État:</strong> {{ character.etat }}<br>
+                <strong>Type:</strong> {{ character.type }}<br>
+                <strong>Team:</strong> {{ character.team }}<br>
+                <strong>Photo:</strong> 
+                {% if character.photo %}
+                    <img src="{{ character.photo.url }}" alt="Photo de {{ character.id_character }}" style="width:100px;height:auto;">
+                {% else %}
+                    <p>Aucune photo disponible</p>
+                {% endif %}
+
+                <strong>Lieu:</strong>
+                {% if character.lieu %}
+                    {{ character.lieu }}  <!-- Affiche le nom du lieu -->
+                {% else %}
+                    <p>Lieu inconnu</p>
+                {% endif %}
+
+            </li>
+        {% empty %}
+            <li>Aucun personnage disponible.</li>
+        {% endfor %}
+    </ul>
+
+<h2>Déplacer un Skieur</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Soumettre</button>
+    </form>
+
+<h1>Liste des Équipements</h1>
+    <ul>
+        {% for equipement in equipements %}
+            <li>
+                <strong>ID:</strong> {{ equipement.id_equip }}<br>
+                <strong>Disponibilité:</strong> {{ equipement.disponibilite }}<br>
+                <strong>Photo:</strong> 
+                <img src="{{ equipement.photo.url }}" alt="Photo de {{ equipement.id_equip }}" style="width:100px;height:auto;"><br>
+            </li>
+        {% empty %}
+            <li>Aucun équipement disponible.</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
